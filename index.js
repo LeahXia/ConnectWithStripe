@@ -6,11 +6,23 @@ const querystring = require('querystring');
 const express = require('express');
 const admin = require('firebase-admin');
 const serviceAccount = require('./washi-tape-firebase-adminsdk.json');
+const firebase = require('firebase')
+
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://washi-tape.firebaseio.com'
 });
+
+var config = {
+  apiKey: "AIzaSyD8J3w2bnaRHGvz7_Z1BD1VyE00lJQsRzY",
+  authDomain: "washi-tape.firebaseapp.com",
+  databaseURL: "https://washi-tape.firebaseio.com",
+  projectId: "washi-tape",
+  storageBucket: "washi-tape.appspot.com",
+  messagingSenderId: "915313004323"
+};
+firebase.initializeApp(config);
 
 const server = express();
 
@@ -39,7 +51,7 @@ server.get('/', async (req, res) => {
         console.log('-------------------------customToken--------------------');
         console.log(customToken);
         // sign in to fb with token
-        return admin.auth().signInWithCustomToken(customToken).catch(function(error) {
+        return firebase.auth().signInWithCustomToken(customToken).catch(function(error) {
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorMessage);
