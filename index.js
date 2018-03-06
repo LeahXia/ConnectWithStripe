@@ -73,7 +73,9 @@ server.get('/token', async (req, res) => {
           console.log(errorMessage);
         }).then(() => {
           const connectRef = '/stripe_customers/' + userUid + '/connectAcct'
-          return admin.database().ref(connectRef).set(body).catch(function(error) {
+          const updateValue = ['id':body.stripe_user_id, 'publishable': body.stripe_publishable_key, 'secret':body.access_token,
+                                'refresh_token':body.refresh_token]
+          return admin.database().ref(connectRef).set(updateValue).catch(function(error) {
             console.log(error);
           }).then(() => {
             res.send('The Stripe onboarding process has been succeeded.');
