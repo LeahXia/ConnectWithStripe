@@ -39,7 +39,7 @@ server.get('/', async (req, res) => {
         console.log('-------------------------customToken--------------------');
         console.log(customToken);
         // sign in to fb with token
-        return firebase.auth().signInWithCustomToken(customToken).catch(function(error) {
+        return admin.auth().signInWithCustomToken(customToken).catch(function(error) {
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorMessage);
