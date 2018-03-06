@@ -28,7 +28,7 @@ const server = express();
 
 const userUid = '';
 
-server.get('/:ids', function (req, res) => {
+server.get('/:ids', function (req, res){
   //parse paras from app
   userUid = req.params.ids.user_uid;
   const client_id = req.params.ids.client_id;
