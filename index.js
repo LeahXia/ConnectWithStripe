@@ -26,12 +26,12 @@ firebase.initializeApp(firebaseConfig);
 
 const server = express();
 
-const userUid = '';
+var userUid = '';
 
 server.get('/:ids', function (req, res){
   //parse paras from app
-  userUid = req.params.ids.query.user_uid;
-  const client_id = req.params.ids.query.client_id;
+  userUid = req.params.ids.user_uid;
+  const client_id = req.params.ids.client_id;
 
   const authorizeUrl = 'https://connect.stripe.com/oauth/authorize?response_type=code&scope=read_write&client_id=' + client_id;
 
