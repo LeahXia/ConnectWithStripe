@@ -26,7 +26,22 @@ firebase.initializeApp(firebaseConfig);
 
 const server = express();
 
+const userUid;
+
 server.get('/', async (req, res) => {
+  //parse paras from app
+  userUid = req.query.user_uid;
+  const client_id = req.query.client_id;
+
+  const authorizeUrl = 'https://connect.stripe.com/oauth/authorize?response_type=code&scope=read_write&client_id=' + client_id;
+
+  res.redirect(authorizeUrl);
+
+});
+
+
+
+server.get('/token', async (req, res) => {
   // Post the authorization code to Stripe to complete the authorization flow.
   request.post(config.stripe.tokenUri, {
     form: {
@@ -42,9 +57,8 @@ server.get('/', async (req, res) => {
       // res.send('The Stripe onboarding process has been succeeded.')
       console.log(body);
       // var customToken = createFBToken(body.stripe_user_id);
+
       // create FB token
-      // DtD6sMoOUXdX611jt02hrUO48Z85
-      // body.stripe_user_id
       return admin.auth().createCustomToken('MYLPF2l9KSNW53DIL8GVqfevmm62').catch(function(error) {
           console.log("Error creating custom token:", error);
       }).then(function(customToken) {
@@ -56,27 +70,13 @@ server.get('/', async (req, res) => {
           var errorMessage = error.message;
           console.log(errorMessage);
         }).then(() => {
-          return admin.database().ref('/stripe/MYLPF2l9KSNW53DIL8GVqfevmm62/connectAcct').set(body);
+          const connectRef = '/stripe_customers/' + userUid + '/connectAcct'
+          return admin.database().ref(connectRef).set(body);
         })
       });
     };
   });
 });
-
-
-// var createFBToken = (uid) =>{
-//
-//   admin.auth().createCustomToken(uid)
-//     .then(function(customToken) {
-//       // Send token back to client
-//       console.log('-------------------------customToken--------------------');
-//       console.log(customToken);
-//       return customToken;
-//     })
-//     .catch(function(error) {
-//       console.log("Error creating custom token:", error);
-//     });
-// };
 
 
 server.listen(process.env.PORT);
