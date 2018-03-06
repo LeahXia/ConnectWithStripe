@@ -1,8 +1,8 @@
 
 const config = require('./config');
-const stripe = require('stripe')(config.stripe.secretKey);
+// const stripe = require('stripe')(config.stripe.secretKey);
 const request = require('request');
-const querystring = require('querystring');
+// const querystring = require('querystring');
 const express = require('express');
 const admin = require('firebase-admin');
 const serviceAccount = require('./washi-tape-firebase-adminsdk.json');
@@ -35,8 +35,7 @@ server.get('/:client_id/:user_uid', function (req, res){
   console.log(`----userUid ----  ${userUid}`);
   console.log(`----client_id ----  ${client_id}`);
 
-
-  const authorizeUrl = 'https://connect.stripe.com/oauth/authorize?response_type=code&scope=read_write&client_id=' + client_id;
+  const authorizeUrl = config.stripe.authorizeUrl + client_id;
 
   res.redirect(authorizeUrl);
 
@@ -74,7 +73,9 @@ server.get('/token', async (req, res) => {
           console.log(errorMessage);
         }).then(() => {
           const connectRef = '/stripe_customers/' + userUid + '/connectAcct'
-          return admin.database().ref(connectRef).set(body);
+          return admin.database().ref(connectRef).set(body).catch(function(error) {
+            console.log(error);
+          })
         })
       });
     };
