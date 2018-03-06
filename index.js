@@ -33,6 +33,10 @@ server.get('/:ids', function (req, res){
   userUid = req.params.ids.user_uid;
   const client_id = req.params.ids.client_id;
 
+  console.log(`----userUid ----  ${userUid}`);
+  console.log(`----client_id ----  ${client_id}`);
+
+
   const authorizeUrl = 'https://connect.stripe.com/oauth/authorize?response_type=code&scope=read_write&client_id=' + client_id;
 
   res.redirect(authorizeUrl);
@@ -59,7 +63,7 @@ server.get('/token', async (req, res) => {
       // var customToken = createFBToken(body.stripe_user_id);
 
       // create FB token
-      return admin.auth().createCustomToken('MYLPF2l9KSNW53DIL8GVqfevmm62').catch(function(error) {
+      return admin.auth().createCustomToken(userUid).catch(function(error) {
           console.log("Error creating custom token:", error);
       }).then(function(customToken) {
         console.log('-------------------------customToken--------------------');
