@@ -47,7 +47,7 @@ server.get('/', async (req, res) => {
           return admin.database().ref('/stripe/MYLPF2l9KSNW53DIL8GVqfevmm62/connectAcct').set(body);
         })
       });
-    });
+    };
   });
 });
 
