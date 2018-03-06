@@ -75,6 +75,8 @@ server.get('/token', async (req, res) => {
           const connectRef = '/stripe_customers/' + userUid + '/connectAcct'
           return admin.database().ref(connectRef).set(body).catch(function(error) {
             console.log(error);
+          }).then(() => {
+            res.send('The Stripe onboarding process has been succeeded.');
           })
         })
       });
