@@ -42,6 +42,7 @@ var createFBToken = (uid) =>{
   admin.auth().createCustomToken(uid)
     .then(function(customToken) {
       // Send token back to client
+      console.log('-------------------------customToken--------------------');
       console.log(customToken);
       return customToken;
     })
