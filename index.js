@@ -1,6 +1,6 @@
 
 const config = require('./config');
-// const stripe = require('stripe')(config.stripe.secretKey);
+const stripe = require('stripe')(config.stripe.secretKey);
 const request = require('request');
 const querystring = require('querystring');
 const express = require('express');
