@@ -35,36 +35,36 @@ server.get('/', async (req, res) => {
       // body.stripe_user_id
       return admin.auth().createCustomToken('MYLPF2l9KSNW53DIL8GVqfevmm62').catch(function(error) {
           console.log("Error creating custom token:", error);
-        }).then(function(customToken) {
-          console.log('-------------------------customToken--------------------');
-          console.log(customToken);
-          // sign in to fb with token
-          return firebase.auth().signInWithCustomToken(customToken).catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorMessage);
-          }).then(() => {
-            return admin.database().ref('/stripe/MYLPF2l9KSNW53DIL8GVqfevmm62/connectAcct').set(body);
+      }).then(function(customToken) {
+        console.log('-------------------------customToken--------------------');
+        console.log(customToken);
+        // sign in to fb with token
+        return firebase.auth().signInWithCustomToken(customToken).catch(function(error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorMessage);
+        }).then(() => {
+          return admin.database().ref('/stripe/MYLPF2l9KSNW53DIL8GVqfevmm62/connectAcct').set(body);
         })
-
-    }
+      });
+    });
   });
 });
 
 
-var createFBToken = (uid) =>{
-
-  admin.auth().createCustomToken(uid)
-    .then(function(customToken) {
-      // Send token back to client
-      console.log('-------------------------customToken--------------------');
-      console.log(customToken);
-      return customToken;
-    })
-    .catch(function(error) {
-      console.log("Error creating custom token:", error);
-    });
-};
+// var createFBToken = (uid) =>{
+//
+//   admin.auth().createCustomToken(uid)
+//     .then(function(customToken) {
+//       // Send token back to client
+//       console.log('-------------------------customToken--------------------');
+//       console.log(customToken);
+//       return customToken;
+//     })
+//     .catch(function(error) {
+//       console.log("Error creating custom token:", error);
+//     });
+// };
 
 
 server.listen(process.env.PORT);
