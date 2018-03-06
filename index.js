@@ -14,7 +14,7 @@ admin.initializeApp({
   databaseURL: 'https://washi-tape.firebaseio.com'
 });
 
-var config = {
+var firebaseConfig = {
   apiKey: "AIzaSyD8J3w2bnaRHGvz7_Z1BD1VyE00lJQsRzY",
   authDomain: "washi-tape.firebaseapp.com",
   databaseURL: "https://washi-tape.firebaseio.com",
@@ -22,7 +22,7 @@ var config = {
   storageBucket: "washi-tape.appspot.com",
   messagingSenderId: "915313004323"
 };
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 
 const server = express();
 
