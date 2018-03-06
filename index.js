@@ -73,8 +73,8 @@ server.get('/token', async (req, res) => {
           console.log(errorMessage);
         }).then(() => {
           const connectRef = '/stripe_customers/' + userUid + '/connectAcct'
-          const updateValue = ['id':body.stripe_user_id, 'publishable': body.stripe_publishable_key, 'secret':body.access_token,
-                                'refresh_token':body.refresh_token]
+          const updateValue = {'id':body.stripe_user_id, 'publishable': body.stripe_publishable_key, 'secret':body.access_token,
+                                'refresh_token':body.refresh_token}
           return admin.database().ref(connectRef).set(updateValue).catch(function(error) {
             console.log(error);
           }).then(() => {
